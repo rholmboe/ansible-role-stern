@@ -1,0 +1,45 @@
+---
+- name: Ensure tar is installed.
+  become: yes
+  package:
+    name: tar
+    state: present
+
+- name: Ensure a temporary directory for download exits.
+  become: yes
+  register: temp_dir
+  tempfile:
+    state: directory
+    suffix: stern
+  tags:
+    - molecule-idempotence-notest
+
+- name: Download and unarchive stern to temporary directory.
+  become: yes
+  unarchive:
+    src: "https://github.com/stern/stern/releases/download/v{{ stern_version }}/stern_{{ stern_version }}_linux_{{ stern_arch }}.tar.gz"
+    dest: "{{ temp_dir.path }}"
+    remote_src: yes
+    creates: "{{ temp_dir.path }}/stern_{{ stern_version }}_linux_{{ stern_arch }}"
+  tags:
+    - molecule-idempotence-notest
+
+- name: Copy stern binary to {{ stern_bin_path }}
+  become: yes
+  copy:
+    src: "{{ temp_dir.path }}/stern_{{ stern_version }}_linux_{{ stern_arch }}/stern"
+    dest: "{{ stern_bin_path }}"
+    remote_src: yes
+    owner: "{{ stern_user }}"
+    group: "{{ stern_group }}"
+    mode: 0755
+  tags:
+    - molecule-idempotence-notest
+
+- name: Use the registered var and the file module to remove the temporary file
+  file:
+    path: "{{ temp_dir.path }}"
+    state: absent
+  when: temp_dir.path is defined
+  tags:
+    - molecule-idempotence-notest

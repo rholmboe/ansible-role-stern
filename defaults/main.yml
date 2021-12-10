@@ -1,0 +1,6 @@
+---
+stern_version: "1.20.1"
+stern_arch: "amd64"
+stern_bin_path: /usr/local/bin
+stern_user: "root"
+stern_group: "root"

@@ -1,8 +1,8 @@
 # Ansible Role: Stern
 
 [![CI](https://github.com/rholmboe/ansible-role-stern/actions/workflows/ci.yml/badge.svg)](https://github.com/rholmboe/ansible-role-stern/actions/workflows/ci.yml)
-![Ansible Role](https://img.shields.io/ansible/role/57220?logo=ansible)
-![Ansible Quality Score](https://img.shields.io/ansible/quality/57220?logo=ansible)
+[![Ansible Role](https://img.shields.io/ansible/role/57220?logo=ansible)](https://galaxy.ansible.com/rholmboe/stern)
+[![Ansible Quality Score](https://img.shields.io/ansible/quality/57220?logo=ansible)](https://galaxy.ansible.com/rholmboe/stern)
 
 Installs [Stern](https://github.com/stern/stern), a Go-based log tailer for kubernetes.
 

@@ -6,19 +6,21 @@
     stern_bin_path: "/usr/local/bin"
     stern_version: "version: 1.20.1"
   tasks:
-    - name: Ensure Stern is installed.
-      stat:
+    - name: Ensure Stern is installed
+      ansible.builtin.stat:
         path: "{{ stern_bin_path }}/stern"
       register: this_stat
 
-    - name: Get version from Stern.
-      command: "{{ stern_bin_path }}/stern --version"
+    - name: Get version from Stern
+      ansible.builtin.command: "{{ stern_bin_path }}/stern --version"
       register: this_exec
 
-    - assert:
+    - name: Assert binary exists
+      ansible.builtin.assert:
         that:
           - this_stat.stat.exists
 
-    - assert:
+    - name: Assert version is correct
+      ansible.builtin.assert:
         that:
           - this_exec.stdout_lines[0] == stern_version

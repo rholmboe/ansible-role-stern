@@ -17,8 +17,7 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+    converge: ${MOLECULE_PLAYBOOK:-../resources/converge.yml}
+    verify: ${MOLECULE_PLAYBOOK:-../resources/verify.yml}
 verifier:
   name: ansible
-  options:
-    v: 1

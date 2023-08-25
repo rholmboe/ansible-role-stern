@@ -17,7 +17,7 @@ None.
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
 ```
-    stern_version: "1.20.1"
+    stern_version: "1.26.0"
 ```
 
 The Stern version to install.

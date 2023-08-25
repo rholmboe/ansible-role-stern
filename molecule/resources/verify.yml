@@ -4,7 +4,7 @@
   gather_facts: false
   vars:
     stern_bin_path: "/usr/local/bin"
-    stern_version: "version: 1.20.1"
+    stern_version: "version: 1.26.0"
   tasks:
     - name: Ensure Stern is installed
       ansible.builtin.stat:
@@ -23,4 +23,4 @@
     - name: Assert version is correct
       ansible.builtin.assert:
         that:
-          - this_exec.stdout_lines[0] == stern_version
+          - stern_version in this_exec.stdout

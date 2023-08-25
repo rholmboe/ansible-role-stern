@@ -1,12 +1,12 @@
 ---
 - name: Ensure tar is installed.
-  become: yes
+  become: true
   ansible.builtin.package:
     name: tar
     state: present
 
 - name: Ensure a temporary directory for download exits.
-  become: yes
+  become: true
   register: temp_dir
   ansible.builtin.tempfile:
     state: directory
@@ -15,21 +15,21 @@
     - molecule-idempotence-notest
 
 - name: Download and unarchive stern to temporary directory.
-  become: yes
+  become: true
   ansible.builtin.unarchive:
     src: "https://github.com/stern/stern/releases/download/v{{ stern_version }}/stern_{{ stern_version }}_linux_{{ stern_arch }}.tar.gz"
     dest: "{{ temp_dir.path }}"
-    remote_src: yes
+    remote_src: true
     creates: "{{ temp_dir.path }}/stern_{{ stern_version }}_linux_{{ stern_arch }}"
   tags:
     - molecule-idempotence-notest
 
 - name: Copy stern binary to {{ stern_bin_path }}
-  become: yes
+  become: true
   ansible.builtin.copy:
-    src: "{{ temp_dir.path }}/stern_{{ stern_version }}_linux_{{ stern_arch }}/stern"
+    src: "{{ temp_dir.path }}/stern"
     dest: "{{ stern_bin_path }}"
-    remote_src: yes
+    remote_src: true
     owner: "{{ stern_user }}"
     group: "{{ stern_group }}"
     mode: 0755

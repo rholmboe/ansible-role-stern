@@ -18,17 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: "rholmboe.stern"
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
       - name: Install test dependencies.
-        run: pip3 install ansible ansible-lint yamllint
+        run: |
+          python3 -m pip install ansible ansible-lint yamllint
 
       - name: Lint code.
         run: |
@@ -41,27 +42,31 @@ jobs:
     strategy:
       matrix:
         distro:
-          - debian9
           - debian10
           - debian11
-          - centos7
-          - centos8
+          - debian12
           - ubuntu1804
           - ubuntu2004
+          - ubuntu2204
+          - rockylinux8
+          - rockylinux9
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: "rholmboe.stern"
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "3.x"
 
       - name: Install test dependencies.
-        run: pip3 install ansible molecule[docker] docker
+        run: |
+          python3 -m pip install --upgrade setuptools
+          python3 -m pip install ansible-core ansible-lint
+          python3 -m pip install molecule "molecule-plugins[docker]"
 
       - name: Run Molecule tests.
         run: molecule test

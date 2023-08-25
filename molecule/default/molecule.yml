@@ -3,6 +3,8 @@ dependency:
   name: galaxy
 driver:
   name: docker
+verifier:
+  name: ansible
 platforms:
   - name: instance
     image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
@@ -17,5 +19,3 @@ provisioner:
   playbooks:
     converge: ${MOLECULE_PLAYBOOK_CONVERGE:-../resources/converge.yml}
     verify: ${MOLECULE_PLAYBOOK_VERIFY:-../resources/verify.yml}
-verifier:
-  name: ansible
